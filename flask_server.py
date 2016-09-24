@@ -60,3 +60,8 @@ def futures_data():
 def accounts():
 	f = open("state_data.json","r")
 	return "".join(f.readlines()) 
+
+@app.route('/rfr')
+def accounts():
+	f = open("rfr.json","r")
+	return "".join(f.readlines()) 
