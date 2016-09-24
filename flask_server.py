@@ -54,14 +54,14 @@ def end_auth():
 @app.route('/futures_data')
 def futures_data():
 	f = open("futures_data.json","r")
-	return "".join(f.readlines()) 
+	return "[" + ",".join(f.readlines()) + "]"
 
 @app.route('/accounts')
 def accounts():
 	f = open("state_data.json","r")
-	return "".join(f.readlines()) 
+	return "[" + ",".join(f.readlines()) + "]" 
 
 @app.route('/rfr')
 def rfr():
 	f = open("rfr.json","r")
-	return "".join(f.readlines()) 
+	return "[" + ",".join(f.readlines()) + "]"
