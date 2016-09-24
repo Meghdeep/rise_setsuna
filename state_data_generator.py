@@ -10,7 +10,7 @@ for bank in bank_name:
 	for account in range(0, 10):
 		account_obj = {}
 		account_obj["account_type"]  = "current account"
-		account_obj["id"]            = random.randint(1, 10)
+		account_obj["id"]            = account
 		account_obj["number"]        = random.randint(100000000000, 999999999999)
 		account_obj["balance"]       = random.randint(10000, 100000)
 		if account <= 4:
