@@ -62,6 +62,6 @@ def accounts():
 	return "".join(f.readlines()) 
 
 @app.route('/rfr')
-def accounts():
+def rfr():
 	f = open("rfr.json","r")
 	return "".join(f.readlines()) 
