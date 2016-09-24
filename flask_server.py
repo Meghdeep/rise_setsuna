@@ -61,7 +61,29 @@ def accounts():
 	f = open("state_data.json","r")
 	return "[" + ",".join(f.readlines()) + "]" 
 
-@app.route('/rfr')
-def rfr():
-	f = open("rfr.json","r")
-	return "[" + ",".join(f.readlines()) + "]"
+
+def interest_rate_parity_calculation(currency_pair, quotation_rate, n):
+	rfr = {"USD":0.425, "INR":6.5219, "GBR":0.20, "EUR":0.05}
+	base = currency_pair[:3]
+	quotation = currency_pair[3:]
+	r_value = quotation_rate * ( 1 + rfr[quotation] ) / ( 1 + rfr[base] ) * int(n) / 365
+	return json.dumps({"value":r_value})
+
+
+@app.route('/default_interest_rate_parity')
+def default_interest_rate_parity(currency_pair, quotation_rate, n):
+	obj = {
+	"1 week":   interest_rate_parity_calculation(currency_pair, quotation_rate, 7),
+	"2 weeks":  interest_rate_parity_calculation(currency_pair, quotation_rate, 14),
+	"1 month":  interest_rate_parity_calculation(currency_pair, quotation_rate, 30),
+	"2 months": interest_rate_parity_calculation(currency_pair, quotation_rate, 60),
+	"3 months": interest_rate_parity_calculation(currency_pair, quotation_rate, 90),
+	"6 months": interest_rate_parity_calculation(currency_pair, quotation_rate, 180),
+	"1 year":   interest_rate_parity_calculation(currency_pair, quotation_rate, 365)
+	}
+	return json.dumps(obj)
+
+@app.route('/custom_interest_rate_parity')
+def custom_interest_rate_parity(currency_pair, quotation_rate, n):
+	interest_rate_parity_calculation(currency_pair, quotation_rate, n)
+
