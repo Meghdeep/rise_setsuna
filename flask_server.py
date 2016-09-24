@@ -71,7 +71,10 @@ def interest_rate_parity_calculation(currency_pair, quotation_rate, n):
 
 
 @app.route('/default_interest_rate_parity')
-def default_interest_rate_parity(currency_pair, quotation_rate, n):
+def default_interest_rate_parity():
+	currency_pair = request.form['currency_pair']
+	quotation_rate = request.form['quotation_rate']
+	n = request.form['n']
 	obj = {
 	"1 week":   interest_rate_parity_calculation(currency_pair, quotation_rate, 7),
 	"2 weeks":  interest_rate_parity_calculation(currency_pair, quotation_rate, 14),
@@ -84,6 +87,13 @@ def default_interest_rate_parity(currency_pair, quotation_rate, n):
 	return json.dumps(obj)
 
 @app.route('/custom_interest_rate_parity')
-def custom_interest_rate_parity(currency_pair, quotation_rate, n):
+def custom_interest_rate_parity():
+	currency_pair = request.form['currency_pair']
+	quotation_rate = request.form['quotation_rate']
+	n = request.form['n']
 	interest_rate_parity_calculation(currency_pair, quotation_rate, n)
+
+@app.route('/rates')
+def rates():
+	return """{\"base\":\"GBP\",\"date\":\"2016-09-24\",\"rates\":{\"INR\":86.436,\"USD\":1.2974,\"EUR\":1.1569}}"""
 
