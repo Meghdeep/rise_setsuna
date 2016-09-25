@@ -55,7 +55,7 @@ def end_auth():
 #@crossdomain(origin='*')
 def futures_data():
 	f = open("futures_data.json","r")
-	response = jsonify( json.loads("[" + ",".join(f.readlines()) + "]") )
+	response = jsonify( json.dumps("[" + ",".join(f.readlines()) + "]") )
 	response.headers.add('Access-Control-Allow-Origin', '*')
 	return response
 	return "[" + ",".join(f.readlines()) + "]"
