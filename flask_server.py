@@ -66,11 +66,12 @@ def accounts():
 	return "[" + ",".join(f.readlines()) + "]" 
 
 
-def interest_rate_parity_calculation(currency_pair, quotation_rate, n):
-	rfr = {"USD":0.425, "INR":6.5219, "GBR":0.20, "EUR":0.05}
+def interest_rate_parity_calculation(currency_pair, n):
+	rfr = {"USD":0.425, "INR":6.5219, "GBP":0.20, "EUR":0.05}
+	rates = {"USDINR":66.71, "USDGBP":0.77, "USDEUR":0.89, "INRUSD":0.015, "GBPUSD":1.30, "EURUSD":1.12, "INREUR":0.013, "EURINR":74.89, "INRGBP":0.012, "GBPINR":86.49, "GBPEUR":1.15, "EURGBP":0.87}
 	base = currency_pair[:3]
 	quotation = currency_pair[3:]
-	r_value = quotation_rate * ( 1 + rfr[quotation] ) / ( 1 + rfr[base] ) * int(n) / 365
+	r_value = rates[currency_pair] * ( 1 + rfr[quotation] ) / ( 1 + rfr[base] ) * int(n) / 365
 	return json.dumps({"value":r_value})
 
 
@@ -81,13 +82,13 @@ def default_interest_rate_parity():
 	quotation_rate = request.form['quotation_rate']
 	n = request.form['n']
 	obj = {
-	"1 week":   interest_rate_parity_calculation(currency_pair, quotation_rate, 7),
-	"2 weeks":  interest_rate_parity_calculation(currency_pair, quotation_rate, 14),
-	"1 month":  interest_rate_parity_calculation(currency_pair, quotation_rate, 30),
-	"2 months": interest_rate_parity_calculation(currency_pair, quotation_rate, 60),
-	"3 months": interest_rate_parity_calculation(currency_pair, quotation_rate, 90),
-	"6 months": interest_rate_parity_calculation(currency_pair, quotation_rate, 180),
-	"1 year":   interest_rate_parity_calculation(currency_pair, quotation_rate, 365)
+	"1 week":   interest_rate_parity_calculation(currency_pair, 7),
+	"2 weeks":  interest_rate_parity_calculation(currency_pair, 14),
+	"1 month":  interest_rate_parity_calculation(currency_pair, 30),
+	"2 months": interest_rate_parity_calculation(currency_pair, 60),
+	"3 months": interest_rate_parity_calculation(currency_pair, 90),
+	"6 months": interest_rate_parity_calculation(currency_pair, 180),
+	"1 year":   interest_rate_parity_calculation(currency_pair, 365)
 	}
 	return json.dumps(obj)
 
@@ -96,9 +97,13 @@ def custom_interest_rate_parity():
 	currency_pair = request.form['currency_pair']
 	quotation_rate = request.form['quotation_rate']
 	n = request.form['n']
-	interest_rate_parity_calculation(currency_pair, quotation_rate, n)
+	interest_rate_parity_calculation(currency_pair, n)
 
 @app.route('/rates')
 def rates():
 	return """{\"base\":\"GBP\",\"date\":\"2016-09-24\",\"rates\":{\"INR\":86.436,\"USD\":1.2974,\"EUR\":1.1569}}"""
+
+@app.route('/futures_price_from_interest_rate_parity')
+def futures_price_from_interest_rate_parity():
+	return open("futures_quotations.json", "r").readlines().strip("\n")
 
