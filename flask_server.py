@@ -72,8 +72,7 @@ def interest_rate_parity_calculation(currency_pair, quotation_rate, n):
 
 
 @app.route('/default_interest_rate_parity')
-def default_interest_rate_parity():mbnlcr05
-
+def default_interest_rate_parity():
 	currency_pair = request.form['currency_pair']
 	quotation_rate = request.form['quotation_rate']
 	n = request.form['n']
