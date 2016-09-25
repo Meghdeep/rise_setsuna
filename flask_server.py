@@ -52,6 +52,7 @@ def end_auth():
 		return json.dumps({"status":False})
 
 @app.route('/futures_data')
+@crossdomain(origin='*')
 def futures_data():
 	f = open("futures_data.json","r")
 	return "[" + ",".join(f.readlines()) + "]"
@@ -71,7 +72,8 @@ def interest_rate_parity_calculation(currency_pair, quotation_rate, n):
 
 
 @app.route('/default_interest_rate_parity')
-def default_interest_rate_parity():
+def default_interest_rate_parity():mbnlcr05
+
 	currency_pair = request.form['currency_pair']
 	quotation_rate = request.form['quotation_rate']
 	n = request.form['n']
