@@ -10,7 +10,7 @@ final = []
 for pair in pairs:
 	for date in dates:
 		obj = {}
-		obj["ontracts"] = pair + " " + date
+		obj["contracts"] = pair + " " + date
 		obj["best_bid"] = {}
 		obj["best_ask"] = {}
 		obj["best_bid"]["quantity"] = random.randint(1, 250)
