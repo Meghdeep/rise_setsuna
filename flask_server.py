@@ -3,7 +3,7 @@ import utils
 import twilio
 import random
 import requests
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from twilio.rest.lookups import TwilioLookupsClient
 from twilio.rest.exceptions import TwilioRestException
 from twilio.rest import TwilioRestClient
@@ -55,7 +55,7 @@ def end_auth():
 #@crossdomain(origin='*')
 def futures_data():
 	f = open("futures_data.json","r")
-	response = flask.jsonify( json.load("[" + ",".join(f.readlines()) + "]") )
+	response = jsonify( json.load("[" + ",".join(f.readlines()) + "]") )
 	response.headers.add('Access-Control-Allow-Origin', '*')
 	return response
 	return "[" + ",".join(f.readlines()) + "]"
